@@ -1,22 +1,26 @@
 package com.example.magic8ball;
 
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.widget.TextView;
 
 public class MagicMainActivity extends Activity implements SensorEventListener {
 
 	private Sensor accelerometer;
 	private SensorManager sManager;
-	public TextView textAnswer;
+	private TextView textAnswer;
 	private long lastUpdate = 0;
-	private float last_x, last_y, last_z;
-	private static final int SHAKE_THRESHOLD = 900;
+	private float prevX, prevY, prevZ;
+	private static final int SHAKE_THRESHOLD = 1300;
+	private Vibrator vib;
+	private long[] pattern = {100, 150, 100};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -30,6 +34,7 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 		
 		textAnswer = (TextView) findViewById(R.id.text);
 		textAnswer.setTextSize(40);
+		vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 	}
 
 	protected void onPause() 
@@ -53,7 +58,6 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 	@Override
 	public void onSensorChanged(SensorEvent event) 
 	{
-
 		Sensor sens = event.sensor;
 		
 		if(sens.getType() == Sensor.TYPE_ACCELEROMETER)
@@ -70,16 +74,17 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 	            long diffTime = (curTime - lastUpdate);
 	            lastUpdate = curTime;
 	            
-	            float speed = Math.abs(x + y + z - last_x - last_y - last_z)/ diffTime * 10000;
+	            float speed = Math.abs(x + y + z - prevX - prevY - prevZ)/ diffTime * 10000;
 	            
 	            if (speed > SHAKE_THRESHOLD)
 	            {
+	            	vib.vibrate(pattern, -1);
 	            	showAnswer();
 	            }
 	 
-	            last_x = x;
-	            last_y = y;
-	            last_z = z;
+	            prevX = x;
+	            prevY = y;
+	            prevZ = z;
 	        }
 		}
 	}

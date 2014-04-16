@@ -8,6 +8,9 @@
         android:name="android.hardware.sensor.accelerometer" 
         android:required="true" />
     
+    <uses-permission 
+        android:name="android.permission.VIBRATE" />
+    
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
