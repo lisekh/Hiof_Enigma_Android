@@ -67,34 +67,34 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 	// Create dialog for changing themes
 	public void showThemes()
 	{
-		AlertDialog.Builder showThemes = new AlertDialog.Builder(this);
-		showThemes.setTitle("Choose theme");
+		AlertDialog.Builder themesDialog = new AlertDialog.Builder(this);
+		themesDialog.setTitle("Choose theme");
        
 		// Show possible themes
 		ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.themetext, THEMES);
 	 
-		showThemes.setAdapter(adapter, new OnClickListener() 
+		themesDialog.setAdapter(adapter, new OnClickListener() 
 		{
 			public void onClick(DialogInterface dialog, int whichTheme) 
 			{
 				switch(whichTheme) 
 				{
-					case 0:
+					case 0:	// Normal
 						iButton.setBackgroundResource(R.drawable.magicball);
 						break;
-					case 1:
+					case 1:	// Ocean
 						iButton.setBackgroundResource(R.drawable.ball3);
 						break;
-					case 2:
+					case 2:	// Enigma
 						iButton.setBackgroundResource(R.drawable.ball4);
 						break;
-					case 3:
+					case 3:	// Disco
 						iButton.setBackgroundResource(R.drawable.ball5);
 						break;
-					case 4:
+					case 4:	// Fire
 						iButton.setBackgroundResource(R.drawable.ball6);
 						break;
-					case 5:
+					case 5:	// 8 ball on fire
 						iButton.setBackgroundResource(R.drawable.ball7);
 						break;
 				}
@@ -102,8 +102,8 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 		 });
 		
 		// Show cancel button
-		showThemes.setCancelable(true);
-        showThemes.setNegativeButton("Cancel", new DialogInterface.OnClickListener() 
+		themesDialog.setCancelable(true);
+        themesDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() 
         {
             public void onClick(DialogInterface dialog, int id) 
             {
@@ -111,7 +111,7 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
             }
         });
 
-        AlertDialog alertDialog = showThemes.create();
+        AlertDialog alertDialog = themesDialog.create();
         alertDialog.show();
 	}
 	
