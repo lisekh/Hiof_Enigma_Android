@@ -1,6 +1,7 @@
 package com.example.magic8ball;
 
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +13,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -24,11 +27,12 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 	private TextView textAnswer;
 	private long lastUpdate = 0;
 	private float prevX, prevY, prevZ;
-	private static final int SHAKE_THRESHOLD = 1200;
+	private static final int SHAKE_THRESHOLD = 1100;
 	private Vibrator vib;
 	private final String[] THEMES = {"Normal", "Ocean", "Enigma", "Disco", "Fire", "8 ball on fire"};
 	AlertDialog.Builder alert;
 	ImageButton iButton;
+	RotateAnimation anima;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -49,7 +53,15 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 		textAnswer = (TextView) findViewById(R.id.text);
 		textAnswer.setTextSize(35);
 		
+		// Initialize vibrator
 		vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+		
+		// Initialize animation object
+		anima = new RotateAnimation(0f, 360f, 250f, 250f);
+		anima.setInterpolator(new LinearInterpolator());
+		anima.setRepeatCount(0);
+		anima.setDuration(700);
+		
 	}
 
 	// Create dialog for changing themes
@@ -117,6 +129,7 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 	{
 	    super.onPause();
 	    sManager.unregisterListener(this);
+	    iButton.setAnimation(null);
 	}
 	
 	protected void onResume() 
@@ -150,7 +163,7 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 			
 			long curTime = System.currentTimeMillis();
 			 
-	        if((curTime - lastUpdate) > 150) 
+	        if((curTime - lastUpdate) > 110) 
 	        {
 	            long diffTime = (curTime - lastUpdate);
 	            lastUpdate = curTime;
@@ -160,6 +173,7 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 	            if(speed > SHAKE_THRESHOLD)
 	            {
 	            	vib.vibrate(100);
+	            	iButton.startAnimation(anima);
 	            	showAnswer();
 	            }
 	            prevX = x;
