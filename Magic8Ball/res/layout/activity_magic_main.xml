@@ -12,9 +12,9 @@
         android:id="@+id/magic8ball"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_above="@+id/text"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp"
+        android:layout_marginTop="53dp"
         android:background="@drawable/magicball"
         android:contentDescription="@string/magic8ball" />
 
@@ -22,9 +22,10 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/magic8ball"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="72dp"
+        android:layout_marginTop="35dp"
+        android:gravity="center"
         android:hint="@string/shake" />
 
 </RelativeLayout>
