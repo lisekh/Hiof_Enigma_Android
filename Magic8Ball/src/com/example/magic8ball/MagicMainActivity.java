@@ -13,6 +13,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
@@ -57,7 +58,9 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 		vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 		
 		// Initialize animation object
-		anima = new RotateAnimation(0f, 360f, 250f, 250f);
+		anima = new RotateAnimation(0.0f, 360.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+                0.5f);
 		anima.setInterpolator(new LinearInterpolator());
 		anima.setRepeatCount(0);
 		anima.setDuration(700);
