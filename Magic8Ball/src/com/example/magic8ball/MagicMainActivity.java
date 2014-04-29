@@ -200,6 +200,7 @@ public class MagicMainActivity extends Activity implements SensorEventListener {
 			answers.add("Who knows?!");
 			answers.add("Indeed");
 			answers.add("Don't count on it");
+			answers.add("Looking good");
 			
 		int listSize = answers.size();
 	
